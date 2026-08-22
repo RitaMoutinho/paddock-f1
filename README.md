@@ -1,5 +1,7 @@
 # 🏁 Paddock — site de F1 para fãs
 
+🔗 **[f1-xi-kohl.vercel.app](https://f1-xi-kohl.vercel.app)**
+
 Site feito com Next.js para acompanhar Fórmula 1: classificação do campeonato, corrida
 ao vivo, rádio de equipe e uma página completa por piloto — tudo com dados reais e
 gratuitos, sem chave de API.
