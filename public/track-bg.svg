@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" fill="#101018" />
+
+  <path
+    d="M 220 620
+       C 160 560, 150 460, 210 400
+       C 260 350, 340 370, 380 320
+       C 420 270, 400 200, 460 160
+       C 540 105, 660 120, 720 180
+       C 760 220, 740 270, 780 310
+       C 830 360, 920 340, 980 280
+       C 1040 220, 1050 150, 1130 140
+       C 1230 128, 1320 190, 1340 280
+       C 1355 350, 1300 400, 1310 470
+       C 1320 545, 1400 570, 1410 650
+       C 1420 730, 1350 790, 1260 780
+       C 1190 772, 1160 720, 1090 710
+       C 1000 697, 940 750, 850 745
+       C 760 740, 720 680, 640 670
+       C 540 658, 470 700, 390 690
+       C 300 679, 270 660, 220 620 Z"
+    stroke="#20202b"
+    stroke-width="46"
+    stroke-linejoin="round"
+  />
+
+  <path
+    d="M 220 620
+       C 160 560, 150 460, 210 400
+       C 260 350, 340 370, 380 320
+       C 420 270, 400 200, 460 160
+       C 540 105, 660 120, 720 180
+       C 760 220, 740 270, 780 310
+       C 830 360, 920 340, 980 280
+       C 1040 220, 1050 150, 1130 140
+       C 1230 128, 1320 190, 1340 280
+       C 1355 350, 1300 400, 1310 470
+       C 1320 545, 1400 570, 1410 650
+       C 1420 730, 1350 790, 1260 780
+       C 1190 772, 1160 720, 1090 710
+       C 1000 697, 940 750, 850 745
+       C 760 740, 720 680, 640 670
+       C 540 658, 470 700, 390 690
+       C 300 679, 270 660, 220 620 Z"
+    stroke="#2c2c39"
+    stroke-width="2"
+    stroke-dasharray="14 16"
+  />
+
+  <g opacity="0.9">
+    <path d="M 455 165 L 475 145" stroke="#3a1f1f" stroke-width="14" stroke-linecap="round" />
+    <path d="M 465 155 L 480 140" stroke="#5a2a2a" stroke-width="6" stroke-linecap="round" />
+
+    <path d="M 1125 148 L 1150 132" stroke="#3a1f1f" stroke-width="14" stroke-linecap="round" />
+    <path d="M 1133 142 L 1152 128" stroke="#5a2a2a" stroke-width="6" stroke-linecap="round" />
+
+    <path d="M 1255 775 L 1285 782" stroke="#3a1f1f" stroke-width="14" stroke-linecap="round" />
+    <path d="M 1258 770 L 1290 778" stroke="#5a2a2a" stroke-width="6" stroke-linecap="round" />
+
+    <path d="M 215 625 L 195 600" stroke="#3a1f1f" stroke-width="14" stroke-linecap="round" />
+    <path d="M 222 618 L 200 595" stroke="#5a2a2a" stroke-width="6" stroke-linecap="round" />
+  </g>
+
+  <line x1="700" y1="150" x2="700" y2="195" stroke="#44444f" stroke-width="6" />
+  <line x1="706" y1="150" x2="706" y2="195" stroke="#1a1a20" stroke-width="6" />
+</svg>

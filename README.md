@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏁 Paddock — site de F1 para fãs
 
-## Getting Started
+Site feito com Next.js para acompanhar Fórmula 1: classificação do campeonato, corrida
+ao vivo, rádio de equipe e uma página completa por piloto — tudo com dados reais e
+gratuitos, sem chave de API.
 
-First, run the development server:
+## Fontes de dados
+
+- **[OpenF1](https://openf1.org)** — telemetria e dados de sessão: voltas, posições,
+  pit stops, pneus, clima, direção de prova e rádio de equipe (áudio).
+- **[Jolpica-F1](https://github.com/jolpica/jolpica-f1)** — sucessora gratuita da Ergast:
+  classificação de pilotos e construtores, calendário da temporada.
+
+Nenhuma das duas exige chave de API nem cadastro.
+
+## Páginas
+
+- **`/`** — sessão em destaque (ao vivo durante o fim de semana de corrida), líder do
+  campeonato em destaque, campeonato de construtores, classificação da corrida ao vivo,
+  rádio da equipe de qualquer piloto, próximo GP, grid completo de pilotos e direção de
+  prova.
+- **`/classificacao`** — classificação completa do campeonato (pilotos e construtores).
+- **`/piloto/[numero]`** — página individual: gráfico de desempenho (posição, ritmo,
+  velocidade, com tooltip interativo), estratégia de pneus, pit stops, rádio da equipe,
+  tabela de todas as voltas, classificação da sessão e condições da pista. Aceita
+  `?session=<session_key>` para ver uma sessão específica em vez da mais recente.
+
+## Rodando localmente
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [Next.js 16](https://nextjs.org) (App Router, Server Components)
+- TypeScript
+- Tailwind CSS v4
+- [lucide-react](https://lucide.dev) para ícones
+- [country-flag-icons](https://www.npmjs.com/package/country-flag-icons) para bandeiras
 
-## Learn More
+## Estrutura
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+  lib/
+    openf1.ts        — client tipado para a API OpenF1
+    jolpica.ts        — client tipado para a API Jolpica-F1 (classificação)
+    safeFetch.ts      — diferencia "sem dado" de "falha na requisição"
+    teamColors.ts     — casa nome de equipe (Jolpica) com cor real (OpenF1)
+    types.ts          — tipos de todos os dados
+  components/         — gráficos, cards, listas reutilizadas entre home/piloto
+  app/
+    page.tsx                  — home
+    classificacao/page.tsx    — classificação completa
+    piloto/[number]/page.tsx  — página do piloto
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Limites da API
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+O plano gratuito do OpenF1 permite 3 requisições/segundo. Quando isso acontece, o site
+não trata a falha como "sem dado" — mostra um aviso específico ("não foi possível
+carregar agora, recarregue a página"). As páginas são renderizadas por requisição
+(`dynamic = "force-dynamic"`), então um rate limit nunca quebra o build/deploy.
 
-## Deploy on Vercel
+## Créditos
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Foto de fundo da página do piloto: *Circuit Zandvoort* por
+[dronepicr](https://commons.wikimedia.org/wiki/File:Aerial_view_of_Motorsport_race_track_Circuit_Zandvoort_Formula_one_(40889997713).jpg),
+licença CC BY 2.0.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy na Vercel
+
+```bash
+npx vercel
+```
+
+Ou conecte o repositório em [vercel.com/new](https://vercel.com/new) — não precisa de
+nenhuma variável de ambiente.
+
+## Ideias para evoluir
+
+- Batalhas em tempo real (gap entre pilotos adjacentes na corrida).
+- Detecção de ultrapassagens comparando posição volta a volta.
+- Comparação lado a lado entre dois pilotos.
+- Página de equipe e de circuito.

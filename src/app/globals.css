@@ -1,26 +1,88 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #101018;
+  --card-from: #1a1a24;
+  --card-to: #15151e;
+  --foreground: #f2f2f4;
+  --muted: #9a9aa6;
+  --border: rgba(255, 255, 255, 0.07);
+  --f1-red: #ed1c24;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), Arial, Helvetica, sans-serif;
+  background-image:
+    repeating-linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.015) 0px,
+      rgba(255, 255, 255, 0.015) 1px,
+      transparent 1px,
+      transparent 64px
+    ),
+    radial-gradient(ellipse 1200px 600px at 50% -10%, rgba(237, 28, 36, 0.14), transparent 60%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Track photo background — used only on driver pages, not site-wide. */
+.track-bg {
+  background-image:
+    linear-gradient(rgba(16, 16, 24, 0.8), rgba(16, 16, 24, 0.88)),
+    url("/track-bg.jpg");
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+}
+
+/* Track illustration background — used on the home page. */
+.track-illustration-bg {
+  background-image:
+    linear-gradient(rgba(16, 16, 24, 0.6), rgba(16, 16, 24, 0.75)),
+    url("/track-bg.svg");
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+}
+
+.font-display {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.panel {
+  background: linear-gradient(180deg, var(--card-from) 0%, var(--card-to) 100%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.55);
+  padding: 1.75rem;
+  /* Flex/grid children default to min-width: auto, so wide content inside (charts,
+     tables) can force the whole card wider than its column instead of shrinking to
+     fit — every card uses this class, so fix it here once instead of per-page. */
+  min-width: 0;
+}
+
+::selection {
+  background: var(--f1-red);
+  color: white;
+}
+
+/* `background-attachment: fixed` is unreliable on real mobile browsers (it can cause
+   repaint glitches during scroll, making card backgrounds flicker or look transparent).
+   Fall back to normal scrolling backgrounds below desktop widths. */
+@media (max-width: 1024px) {
+  body,
+  .track-bg,
+  .track-illustration-bg {
+    background-attachment: scroll;
+  }
 }
