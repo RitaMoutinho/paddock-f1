@@ -11,7 +11,15 @@ export function formatDuration(seconds: number | null): string {
 }
 
 export function formatClock(iso: string): string {
-  return new Date(iso).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+  // timeZone must be fixed (not left to the runtime default): the server renders in UTC
+  // while the browser renders in the visitor's local zone, and a mismatch between the two
+  // trips a React hydration error on load.
+  return new Date(iso).toLocaleTimeString("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    timeZone: "UTC",
+  });
 }
 
 // OpenF1 serves driver headshots via F1's AEM image transform pipeline, defaulting to a

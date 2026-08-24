@@ -17,13 +17,27 @@ const BASE_URL = "https://api.openf1.org/v1";
 // browsing between driver pages doesn't hammer the API.
 const REVALIDATE_SECONDS = 60;
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 async function fetchOpenF1<T>(path: string, params: Record<string, string | number | undefined>): Promise<T> {
   const query = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
     if (value !== undefined) query.set(key, String(value));
   }
   const url = `${BASE_URL}${path}?${query.toString()}`;
-  const res = await fetch(url, { next: { revalidate: REVALIDATE_SECONDS } });
+
+  // The home page fires several OpenF1 requests at once, which routinely trips the free
+  // tier's 3 req/s limit. Retrying a 429 after a short wait clears most of these without
+  // the page ever seeing a failure, instead of crashing straight to the error boundary.
+  let res: Response;
+  let attempt = 0;
+  do {
+    res = await fetch(url, { next: { revalidate: REVALIDATE_SECONDS } });
+    if (res.status !== 429) break;
+    attempt++;
+    if (attempt <= 3) await sleep(400 * attempt);
+  } while (attempt <= 3);
+
   if (!res.ok) {
     throw new Error(`OpenF1 request failed (${res.status}): ${url}`);
   }
