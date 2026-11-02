@@ -60,13 +60,26 @@ export function getRecentSessions(year: number) {
   return fetchOpenF1<Session[]>("/sessions", { year, session_type: "Race" });
 }
 
+// OpenF1 sends null team data for some entries (e.g. reserve driver #50 in the 2026 Mexico
+// City race), but every consumer assumes strings. Filling fallbacks here, once, keeps a single
+// odd entry from taking down the whole page.
+function normalizeDriver(driver: Driver): Driver {
+  return {
+    ...driver,
+    team_name: driver.team_name?.trim() || "Sem equipe",
+    team_colour: driver.team_colour?.trim() || "888888",
+  };
+}
+
 export function getDrivers(sessionKey: number) {
-  return fetchOpenF1<Driver[]>("/drivers", { session_key: sessionKey });
+  return fetchOpenF1<Driver[]>("/drivers", { session_key: sessionKey }).then((drivers) =>
+    drivers.map(normalizeDriver),
+  );
 }
 
 export function getDriver(sessionKey: number, driverNumber: number) {
   return fetchOpenF1<Driver[]>("/drivers", { session_key: sessionKey, driver_number: driverNumber }).then(
-    (d) => d[0],
+    (d) => (d[0] ? normalizeDriver(d[0]) : d[0]),
   );
 }
 

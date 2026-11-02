@@ -29,8 +29,8 @@ export interface Driver {
   name_acronym: string;
   team_name: string;
   team_colour: string;
-  first_name: string;
-  last_name: string;
+  first_name: string | null;
+  last_name: string | null;
   headshot_url: string | null;
   country_code: string | null;
 }
